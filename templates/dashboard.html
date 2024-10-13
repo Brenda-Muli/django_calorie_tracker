@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block title %}Dashboard - Calorie Tracker{% endblock %}
+
+{% block content %}
+    <h2>Total Calories Consumed: {{ total_calories }}</h2>
+    <form action="{% url 'reset_calories' %}" method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Reset Calories</button>
+    </form>
+
+    <br> <br>
+    <h3>Food Categories:</h3>
+    <div>
+        <button class="btn btn-info" data-toggle="collapse" data-target="#breakfastForm">Breakfast</button>
+        <button class="btn btn-info" data-toggle="collapse" data-target="#lunchForm">Lunch</button>
+        <button class="btn btn-info" data-toggle="collapse" data-target="#supperForm">Supper</button>
+    </div>
+
+    <br> <br>
+    <div>
+        <h4>Your Food Entries For The Day:</h4>
+        <ul>
+            {% for entry in food_entries %}
+                <li>{{entry.meal_type}}: {{ entry.food_item }} - {{ entry.calories }} calories
+                    <a href="{% url 'remove_food' entry.id %}" class="btn btn-danger btn-sm">Remove</a>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    
+    <div id="breakfastForm" class="collapse">
+        <h5>Add Breakfast Item</h5>
+        <form method="POST" action="{% url 'add_food' %}">
+            {% csrf_token %}
+            {{ breakfast_form.as_p }}
+            <button type="submit" class="btn btn-primary">Save</button>
+        </form>
+    </div>
+
+    
+    <div id="lunchForm" class="collapse">
+        <h5>Add Lunch Item</h5>
+        <form method="POST" action="{% url 'add_food' %}">
+            {% csrf_token %}
+            {{ lunch_form.as_p }}
+            <button type="submit" class="btn btn-primary">Save</button>
+        </form>
+    </div>
+
+    
+    <div id="supperForm" class="collapse">
+        <h5>Add Supper Item</h5>
+        <form method="POST" action="{% url 'add_food' %}">
+            {% csrf_token %}
+            {{ supper_form.as_p }}
+            <button type="submit" class="btn btn-primary">Save</button>
+        </form>
+    </div>
+{% endblock %}

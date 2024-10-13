@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block title %}Welcome - Calorie Tracker{% endblock %}
+
+{% block content %}
+    <div class="text-center">
+        <h1>Welcome to the Calorie Tracker</h1>
+        <p>Track your calorie intake easily!</p>
+        <a href="{% url 'signup' %}" class="btn btn-dark">SIGN UP</a>
+        <a href="{% url 'login' %}" class="btn btn-dark">LOGIN</a>
+    </div>
+{% endblock %}
